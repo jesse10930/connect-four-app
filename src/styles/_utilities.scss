@@ -44,6 +44,7 @@
   border-radius: 20px;
   border: 2px solid black;
   box-shadow: 0px 15px;
+  padding: 0px 15px;
 
   &:hover {
     border: 2px solid $dk-purple;
@@ -59,6 +60,10 @@
   border-radius: 20px;
   border: 2px solid black;
   box-shadow: 0px 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 15px;
 
   &:hover {
     border: 2px solid $dk-purple;
@@ -74,6 +79,7 @@
   border-radius: 20px;
   border: 2px solid black;
   box-shadow: 0px 15px;
+  padding: 0px 15px;
 
   &:hover {
     border: 2px solid $dk-purple;
@@ -82,3 +88,19 @@
   }
 }
 
+.sm-prpl-btn {
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: $dk-purple;
+  border-radius: 20px;
+  color: white;
+  padding: 0px 25px;
+  height: 39px;
+
+  &:hover {
+    cursor: pointer;
+    background: $pink;
+  }
+}

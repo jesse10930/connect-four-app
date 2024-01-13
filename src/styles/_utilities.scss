@@ -98,9 +98,51 @@
   color: white;
   padding: 0px 25px;
   height: 39px;
+  width: 120px;
 
   &:hover {
     cursor: pointer;
     background: $pink;
+  }
+}
+
+// Scoreboard
+.sb-cont {
+  width: 141px;
+  height: 187px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  position: relative;
+
+  .face {
+    width: 54px;
+    height: 59px;
+    position: absolute;
+    top: 0px;
+  }
+
+  .sb {
+    width: 141px;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 3px solid black;
+    border-radius: 20px;
+    box-shadow: 0px 15px;
+    background: white;
+
+    .player {
+      width: 85px;
+      height: 26px;
+    }
+
+    .score {
+      width: 59px;
+      height: 71px;
+    }
   }
 }

@@ -1,11 +1,22 @@
-import React from 'react';
-import Home from './components/Home';
+import React, {useState} from 'react';
+import MainMenu from './components/MainMenu';
+import GamePlay from './components/GamePlay';
 import './App.scss';
 
 const App = () => {
+  const [started, setStarted] = useState(false);
+
+  const gameStartStop = () => {
+    setStarted(!started);
+  }
+
   return (
     <div className="main-app">
-      <Home />
+      {!started ? (
+        <MainMenu gameStartStop={gameStartStop}/>
+      ) : (
+        <GamePlay gameStartStop={gameStartStop}/>
+      )}
     </div>
   );
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import logo from '../starter-code/images/logo.svg';
 import pvpImg from '../starter-code/images/player-vs-player.svg';
 
-const MainMenu = () => {
+const MainMenu = ({ gameStartStop }) => {
   return (
     <div id="home-cont">
       <div id="home-cont-sq">
@@ -15,7 +15,7 @@ const MainMenu = () => {
             />
           </div>
           <div id="home-btn-cont">
-            <button id="pvp-btn" className="big-yellow-btn heading-s">
+            <button id="pvp-btn" className="big-yellow-btn heading-s" onClick={gameStartStop}>
               <span>player vs player</span>
               <img 
                 src={pvpImg}

@@ -1,4 +1,5 @@
 import React from 'react';
+import check from '../starter-code/images/icon-check.svg'
 
 const rulesModal = ({rulesClick}) => {
   return (
@@ -14,7 +15,13 @@ const rulesModal = ({rulesClick}) => {
             <li>The game ends when there is a 4-in-a-row or a stalemate.</li>
             <li>The starter of the previous game goes second on the next game.</li>
           </ol>
-          <button id='check-btn' onClick={rulesClick}>HEYYYYY!</button>
+          <button id='check-btn' onClick={rulesClick}>
+            <img
+              src={check}
+              alt='check'
+            >
+            </img>
+          </button>
       </div>
     </div>
   );

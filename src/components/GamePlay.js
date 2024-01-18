@@ -3,7 +3,7 @@ import ScoreBoard from './ScoreBoard';
 import PlayingBoard from './PlayingBoard';
 import logo from '../starter-code/images/logo.svg';
 
-const GamePlay = ({gameStartStop}) => {
+const GamePlay = ({gameStartStop, players}) => {
   // const [gamePlay1Score, setGamePlay1Score] = useState(0);
   // const [gamePlay2Score, setGamePlay2Score] = useState(0);
   
@@ -42,6 +42,8 @@ const GamePlay = ({gameStartStop}) => {
   //   console.log(gamePlay2Score);
   // }
 
+  let score = 0;
+
   return (
     <div id="game-play">
       <div id="bot-shadow"></div>
@@ -54,12 +56,19 @@ const GamePlay = ({gameStartStop}) => {
         <button id="restart-btn" className='sm-prpl-btn heading-xs' >restart</button>
       </div>
       <div id="game-board">
-        <ScoreBoard />
-        <PlayingBoard />
-        <ScoreBoard />
+        <ScoreBoard 
+          player={players[0]} 
+          score={score}
+        />
+        <PlayingBoard 
+          players={players}
+        />
+        <ScoreBoard 
+          player={players[1]}
+          score={score}
+        />
       </div>
-</div>
-
+    </div>
   );
 };
 

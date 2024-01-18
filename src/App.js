@@ -10,12 +10,19 @@ const App = () => {
     setStarted(!started);
   }
 
+  let players = ["player 1", "player 2"]
+
   return (
     <div className="main-app">
       {!started ? (
-        <MainMenu gameStartStop={gameStartStop}/>
+        <MainMenu 
+          gameStartStop={gameStartStop}
+        />
       ) : (
-        <GamePlay gameStartStop={gameStartStop}/>
+        <GamePlay 
+          gameStartStop={gameStartStop}
+          players={players}
+        />
       )}
     </div>
   );

@@ -4,7 +4,7 @@ import blackBoard from '../starter-code/images/board-layer-black-large.svg';
 import whiteBoard from '../starter-code/images/board-layer-white-large.svg';
 import turn from '../starter-code/images/turn-background-red.svg';
 
-const PlayingBoard = () => {
+const PlayingBoard = ({ players }) => {
   return (
     <div id="pb-cont">
       <div id="marker-cont">
@@ -31,7 +31,7 @@ const PlayingBoard = () => {
           src={turn}
           alt="turn"
         />
-        <p id="players-turn" className='heading-xs'>player 1's turn</p>
+        <p id="players-turn" className='heading-xs'>{players[0]}'s turn</p>
         <p id="time" className="heading-l">3s</p>
       </div>      
     </div>

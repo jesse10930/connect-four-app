@@ -1,6 +1,7 @@
 import React from 'react';
 import face1 from '../starter-code/images/player-one.svg';
 import face2 from '../starter-code/images/player-two.svg';
+import face3 from '../starter-code/images/cpu.svg';
 
 const ScoreBoard = ({ player, score }) => {
 
@@ -9,7 +10,9 @@ const ScoreBoard = ({ player, score }) => {
       <div id="face" className='face'>
         <img
           id="face-img"
-          src={player === "player 1" ? face1 : face2}
+          src={player === "player 1" ? face1 
+            : player === "player 2" ? face2
+            : face3}
           alt="face"
         />
       </div>

@@ -4,45 +4,34 @@ import PlayingBoard from './PlayingBoard';
 import logo from '../starter-code/images/logo.svg';
 
 const GamePlay = ({gameStartStop, players}) => {
-  // const [gamePlay1Score, setGamePlay1Score] = useState(0);
-  // const [gamePlay2Score, setGamePlay2Score] = useState(0);
+  const [scores, setScores] = useState([0, 0]);
+  const [numOfGames, setNumOfGames] = useState(1);
   
-  // useEffect(() => {
-  //   sessionStorage.setItem("play1Score", 0);
-  //   sessionStorage.setItem("play2Score", 0);
-  // }, []);
+  useEffect(() => {
+    sessionStorage.setItem("play1Score", 0);
+    sessionStorage.setItem("play2Score", 0);
+  }, []);
 
-  // const updateScore = () => {
-  //   let curPlay1Score = Number(sessionStorage.getItem("play1Score"));
-  //   let curPlay2Score = Number(sessionStorage.getItem("play2Score"));
+  const increaseScore = () => {
+    let newScore1 = Number(sessionStorage.getItem("play1Score")) + 1;
+    let newScore2 = Number(sessionStorage.getItem("play2Score")) + 2;
 
-  //   let newPlay1Score = curPlay1Score + gamePlay1Score;
-  //   let newPlay2Score = curPlay2Score + gamePlay2Score;
+    sessionStorage.setItem("play1Score", newScore1);
+    sessionStorage.setItem("play2Score", newScore2);
 
-  //   sessionStorage.setItem("play1Score", newPlay1Score);
-  //   sessionStorage.setItem("play2Score", newPlay2Score);
-  // }
+    setScores([
+      Number(sessionStorage.getItem("play1Score")), 
+      Number(sessionStorage.getItem("play2Score"))
+    ]);
+  }
 
-  // const printScores = () => {
-  //   console.log(sessionStorage.getItem("play1Score"));
-  //   console.log(sessionStorage.getItem("play2Score"));
-  // }
-
-  // const updateGameScore = (e) => {
-  //   let player = e.target.id;
-  //   console.log(player);
-  //   if (player === "menu-btn") {
-  //     let newGamePlay1Score = gamePlay1Score + 1;
-  //     setGamePlay1Score(newGamePlay1Score);
-  //   } else {
-  //     let newGamePlay2Score = gamePlay2Score + 1;
-  //     setGamePlay2Score(newGamePlay2Score);
-  //   }
-  //   console.log(gamePlay1Score);
-  //   console.log(gamePlay2Score);
-  // }
-
-  let score = 0;
+  const endOfGame = () => {
+    console.log('hey')
+    // get who won
+    // increase that player's score
+    // increase the numOfGames
+    // reset the board
+  }
 
   return (
     <div id="game-play">
@@ -56,16 +45,16 @@ const GamePlay = ({gameStartStop, players}) => {
         <button id="restart-btn" className='sm-prpl-btn heading-xs' >restart</button>
       </div>
       <div id="game-board">
-        <ScoreBoard 
+        <ScoreBoard
           player={players[0]} 
-          score={score}
+          score={scores[0]}
         />
-        <PlayingBoard 
+        <PlayingBoard
           players={players}
         />
-        <ScoreBoard 
+        <ScoreBoard
           player={players[1]}
-          score={score}
+          score={scores[1]}
         />
       </div>
     </div>

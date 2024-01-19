@@ -5,21 +5,30 @@ import './App.scss';
 
 const App = () => {
   const [started, setStarted] = useState(false);
+  const [players, setPlayers] = useState(["player 1, player 2"]);
 
-  const gameStartStop = () => {
+  const callSetStarted = () => {
     setStarted(!started);
   }
 
-  let players = ["player 1", "player 2"]
+  const callSetPlayers = (personOrCPU) => {
+    personOrCPU === "pvp-btn" ? setPlayers(["player 1", "player 2"]) : setPlayers(["player 1", "computer"]);
+    callSetStarted();
+  }
+
+  const gameStartStop = (e) => {
+    let personOrCPU = (e.target.parentNode.type === "submit") ? e.target.parentNode.id : e.target.id;
+    callSetPlayers(personOrCPU);
+  }
 
   return (
     <div className="main-app">
       {!started ? (
-        <MainMenu 
+        <MainMenu
           gameStartStop={gameStartStop}
         />
       ) : (
-        <GamePlay 
+        <GamePlay
           gameStartStop={gameStartStop}
           players={players}
         />

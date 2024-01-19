@@ -15,6 +15,7 @@ const PlayingBoard = ({ players }) => {
         />
       </div>
       <div id='playingboard'>
+        <div id='buttons-div'></div>
         <img
           id="blackboard"
           src={blackBoard}

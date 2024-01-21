@@ -136,3 +136,21 @@
     background: white;
   }
 }
+
+// Playing board
+.spaceBtn {
+  width: 70%;
+  height: 70%;
+  border-radius: 50%;
+  opacity: 0;
+  
+  &:hover{
+    cursor: pointer;
+  } 
+}
+
+.circle-cont {
+  display: flex;
+  justify-content: center;  
+  align-items: center;
+}

@@ -125,24 +125,33 @@ body {
         position: relative;
 
         #buttons-div {
-          border: 2px solid red;
-          height: 0;
-          width: 80%;
-          padding-bottom: 68%;
-          margin-left: 10%;
-          margin-top: 30px;
-          background: red;
+          height: 385px;
+          width: 82%;
+          // padding-bottom: 68%;
+          margin-left: 9.5%;
+          margin-top: 25px;
+          display: inline-grid;
+          grid-template-columns: repeat(7, 1fr);
+          grid-template-rows: repeat(6, 1fr);
+          grid-column-gap: 1px;
+          grid-row-gap: 1px;
+
+          // display: none;
         }
 
         #blackboard {
           position: absolute;
           top: 15px;
+          left: 0;
+          z-index: -5;
         }
 
         #whiteboard {
           position: absolute;
           top: 15px;
           left: 0;
+
+          z-index: -4
         }
       }
 

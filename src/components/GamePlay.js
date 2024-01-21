@@ -42,7 +42,7 @@ const GamePlay = ({gameStartStop, players}) => {
           src={logo}
           alt="logo"
         />
-        <button id="restart-btn" className='sm-prpl-btn heading-xs' >restart</button>
+        <button id="restart-btn" className='sm-prpl-btn heading-xs'>restart</button>
       </div>
       <div id="game-board">
         <ScoreBoard

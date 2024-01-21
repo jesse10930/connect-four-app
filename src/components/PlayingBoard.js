@@ -15,17 +15,144 @@ const PlayingBoard = ({ players }) => {
         />
       </div>
       <div id='playingboard'>
-        <div id='buttons-div'></div>
-        <img
-          id="blackboard"
-          src={blackBoard}
-          alt="black-board"
-        />
-        <img
-          id="whiteboard"
-          src={whiteBoard}
-          alt="white-board"
-        />
+        <div id='buttons-div'>
+          <img
+            id="blackboard"
+            src={blackBoard}
+            alt="black-board"
+          />
+          <img
+            id="whiteboard"
+            src={whiteBoard}
+            alt="white-board"
+          />
+          <div id="c1r1" className="circle-cont">
+            <button className="spaceBtn"></button>
+          </div>
+          <div id="c2r1" className="circle-cont">
+            <button className="spaceBtn"></button>
+          </div>
+          <div id="c3r1" className="circle-cont">
+            <button className="spaceBtn"></button>
+          </div>
+          <div id="c4r1" className="circle-cont">
+            <button className="spaceBtn"></button>
+          </div>
+          <div id="c5r1" className="circle-cont">
+            <button className="spaceBtn"></button>
+          </div>
+          <div id="c6r1" className="circle-cont">
+            <button className="spaceBtn"></button>
+          </div>
+          <div id="c7r1" className="circle-cont">
+            <button className="spaceBtn"></button>
+          </div>
+          <div id="c1r2" className="circle-cont">
+            <button className="spaceBtn"></button>
+          </div>
+          <div id="c2r2" className="circle-cont">
+            <button className="spaceBtn"></button>
+          </div>
+          <div id="c3r2" className="circle-cont">
+            <button className="spaceBtn"></button>
+          </div>
+          <div id="c4r2" className="circle-cont">
+            <button className="spaceBtn"></button>
+          </div>
+          <div id="c5r2" className="circle-cont">
+            <button className="spaceBtn"></button>
+          </div>
+          <div id="c6r2" className="circle-cont">
+            <button className="spaceBtn"></button>
+          </div>
+          <div id="c7r2" className="circle-cont">
+            <button className="spaceBtn"></button>
+          </div>
+          <div id="c1r3" className="circle-cont">
+            <button className="spaceBtn"></button>
+          </div>
+          <div id="c2r3" className="circle-cont">
+            <button className="spaceBtn"></button>
+          </div>
+          <div id="c3r3" className="circle-cont">
+            <button className="spaceBtn"></button>
+          </div>
+          <div id="c4r3" className="circle-cont">
+            <button className="spaceBtn"></button>
+          </div>
+          <div id="c5r3" className="circle-cont">
+            <button className="spaceBtn"></button>
+          </div>
+          <div id="c6r3" className="circle-cont">
+            <button className="spaceBtn"></button>
+          </div>
+          <div id="c7r3" className="circle-cont">
+            <button className="spaceBtn"></button>
+          </div>
+          <div id="c1r4" className="circle-cont">
+            <button className="spaceBtn"></button>
+          </div>
+          <div id="c2r4" className="circle-cont">
+            <button className="spaceBtn"></button>
+          </div>
+          <div id="c3r4" className="circle-cont">
+            <button className="spaceBtn"></button>
+          </div>
+          <div id="c4r4" className="circle-cont">
+            <button className="spaceBtn"></button>
+          </div>
+          <div id="c5r4" className="circle-cont">
+            <button className="spaceBtn"></button>
+          </div>
+          <div id="c6r4" className="circle-cont">
+            <button className="spaceBtn"></button>
+          </div>
+          <div id="c7r4" className="circle-cont">
+            <button className="spaceBtn"></button>
+          </div>
+          <div id="c1r5" className="circle-cont">
+            <button className="spaceBtn"></button>
+          </div>
+          <div id="c2r5" className="circle-cont">
+            <button className="spaceBtn"></button>
+          </div>
+          <div id="c3r5" className="circle-cont">
+            <button className="spaceBtn"></button>
+          </div>
+          <div id="c4r5" className="circle-cont">
+            <button className="spaceBtn"></button>
+          </div>
+          <div id="c5r5" className="circle-cont">
+            <button className="spaceBtn"></button>
+          </div>
+          <div id="c6r5" className="circle-cont">
+            <button className="spaceBtn"></button>
+          </div>
+          <div id="c7r5" className="circle-cont">
+            <button className="spaceBtn"></button>
+          </div>
+          <div id="c1r6" className="circle-cont">
+            <button className="spaceBtn"></button>
+          </div>
+          <div id="c2r6" className="circle-cont">
+            <button className="spaceBtn"></button>
+          </div>
+          <div id="c3r6" className="circle-cont">
+            <button className="spaceBtn"></button>
+          </div>
+          <div id="c4r6" className="circle-cont">
+            <button className="spaceBtn"></button>
+          </div>
+          <div id="c5r6" className="circle-cont">
+            <button className="spaceBtn"></button>
+          </div>
+          <div id="c6r6" className="circle-cont">
+            <button className="spaceBtn"></button>
+          </div>
+          <div id="c7r6" className="circle-cont">
+            <button className="spaceBtn"></button>
+          </div>
+        </div>
       </div>
       <div id="turn">
         <img

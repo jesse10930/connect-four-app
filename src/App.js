@@ -29,7 +29,7 @@ const App = () => {
         />
       ) : (
         <GamePlay
-          gameStartStop={gameStartStop}
+          callSetStarted={callSetStarted}
           players={players}
         />
       )}

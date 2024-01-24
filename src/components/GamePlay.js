@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment} from 'react';
 import ScoreBoard from './ScoreBoard';
 import PlayingBoard from './PlayingBoard';
+import Pause from './Pause';
 import logo from '../starter-code/images/logo.svg';
 
-const GamePlay = ({gameStartStop, players}) => {
+const GamePlay = ({callSetStarted, players}) => {
   const [scores, setScores] = useState([0, 0]);
   const [numOfGames, setNumOfGames] = useState(1);
+  const [paused, setPaused] = useState(false);
   
   useEffect(() => {
     sessionStorage.setItem("play1Score", 0);
@@ -25,6 +27,18 @@ const GamePlay = ({gameStartStop, players}) => {
     ]);
   }
 
+  const contGame = () => {
+    setPaused(false);
+  }
+
+  const restartGame = () => {
+    setPaused(false);
+  }
+
+  const quitGame = () => {
+    callSetStarted();
+  }
+
   const endOfGame = () => {
     console.log('hey')
     // get who won
@@ -33,31 +47,45 @@ const GamePlay = ({gameStartStop, players}) => {
     // reset the board
   }
 
+  const menuClick = () => {
+    setPaused(true);
+  }
+
   return (
-    <div id="game-play">
-      <div id="bot-shadow"></div>
-      <div id="header">
-        <button id="menu-btn" className='sm-prpl-btn heading-xs' onClick={gameStartStop}>menu</button>
-        <img 
-          src={logo}
-          alt="logo"
-        />
-        <button id="restart-btn" className='sm-prpl-btn heading-xs'>restart</button>
+    <Fragment>
+      {paused && 
+      <Pause 
+        contGame={contGame}
+        quitGame={quitGame} 
+        restartGame={restartGame}
+      />
+      }
+      <div id="game-play">
+        <div id="bot-shadow"></div>
+        <div id="header">
+          <button id="menu-btn" className='sm-prpl-btn heading-xs' onClick={menuClick}>menu</button>
+          <img 
+            src={logo}
+            alt="logo"
+          />
+          <button id="restart-btn" className='sm-prpl-btn heading-xs'>restart</button>
+        </div>
+        <div id="game-board">
+          <ScoreBoard
+            player={players[0]} 
+            score={scores[0]}
+          />
+          <PlayingBoard
+            players={players}
+            paused={paused}
+          />
+          <ScoreBoard
+            player={players[1]}
+            score={scores[1]}
+          />
+        </div>
       </div>
-      <div id="game-board">
-        <ScoreBoard
-          player={players[0]} 
-          score={scores[0]}
-        />
-        <PlayingBoard
-          players={players}
-        />
-        <ScoreBoard
-          player={players[1]}
-          score={scores[1]}
-        />
-      </div>
-    </div>
+    </Fragment>
   );
 };
 

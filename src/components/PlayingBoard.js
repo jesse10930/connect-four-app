@@ -1,10 +1,24 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import marker from '../starter-code/images/marker-red.svg';
 import blackBoard from '../starter-code/images/board-layer-black-large.svg';
 import whiteBoard from '../starter-code/images/board-layer-white-large.svg';
 import turn from '../starter-code/images/turn-background-red.svg';
 
-const PlayingBoard = ({ players }) => {
+const PlayingBoard = ({ players, paused }) => {
+  const [timeRemaining, setTimeRemaining] = useState(30);
+
+  useEffect(() => {
+    const myCountdown = setInterval(() => {
+      if(!paused) {
+        if(timeRemaining > 0) {
+          setTimeRemaining(timeRemaining - 1)
+        }
+      }
+    }, 987);
+    return () => clearInterval(myCountdown);
+  });
+
+
   return (
     <div id="pb-cont">
       <div id="marker-cont">
@@ -160,7 +174,7 @@ const PlayingBoard = ({ players }) => {
           alt="turn"
         />
         <p id="players-turn" className='heading-xs'>{players[0]}'s turn</p>
-        <p id="time" className="heading-l">3s</p>
+        <p id="time" className="heading-l">{timeRemaining}</p>
       </div>      
     </div>
   )

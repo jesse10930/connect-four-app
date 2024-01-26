@@ -143,6 +143,7 @@
   height: 45px;
   border-radius: 50%;
   opacity: 0;
+  z-index: 100;
   
   &:hover{
     cursor: pointer;
@@ -153,4 +154,11 @@
   display: flex;
   justify-content: center;  
   align-items: center;
+}
+
+// Disabled button
+.disabled {
+  &:hover {
+    cursor: default;
+  }
 }

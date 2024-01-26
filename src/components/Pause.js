@@ -6,7 +6,7 @@ const PauseModal = ({ contGame, restartGame, quitGame }) => {
     <div id='pause-container'>
       <div id='pause-sq'>
         <div id='pause-sel-cont'>
-          <h1 id="pause-title" class='heading-l'>pause</h1>
+          <h1 id="pause-title" className='heading-l'>pause</h1>
           <div id="pause-btn-cont">
             <button id="continue-btn" className="big-white-btn heading-s" onClick={contGame}>
               <span>continue game</span>

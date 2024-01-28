@@ -121,17 +121,21 @@ body {
         width: 90%;
         margin-top: -20px;
         position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
 
         #buttons-div {
           height: 372px;
           width: 435px;
-          margin-left: 62px;
           margin-top: 22px;
           display: inline-grid;
           grid-template-columns: repeat(7, 1fr);
           grid-template-rows: repeat(6, 1fr);
           grid-column-gap: 1px;
           grid-row-gap: 1px;
+          align-items: center;
+          justify-items: center;
         }
 
         #blackboard {

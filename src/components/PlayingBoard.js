@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import marker from '../starter-code/images/marker-red.svg';
+import redMarker from '../starter-code/images/marker-red.svg';
+import yellowMarker from '../starter-code/images/marker-yellow.svg';
 import blackBoard from '../starter-code/images/board-layer-black-large.svg';
 import whiteBoard from '../starter-code/images/board-layer-white-large.svg';
-import turn from '../starter-code/images/turn-background-red.svg';
+import redTurn from '../starter-code/images/turn-background-red.svg';
+import yellowTurn from '../starter-code/images/turn-background-yellow.svg';
+import redCounter from '../starter-code/images/counter-red-large.svg';
+import yellowCounter from '../starter-code/images/counter-yellow-large.svg';
 
 const PlayingBoard = ({ players, paused }) => {
   const [timeRemaining, setTimeRemaining] = useState(30);
+  const [redActive, setRedActive] = useState(true);
 
   useEffect(() => {
     const myCountdown = setInterval(() => {
@@ -21,11 +26,22 @@ const PlayingBoard = ({ players, paused }) => {
   const onCircleClick = (e) => {
     let location = e.target.parentNode.id;
 
-    console.log(location);
-
     let clickedCircle = document.getElementById(location);
     clickedCircle.getElementsByTagName("button")[0].setAttribute("disabled", true);
     clickedCircle.getElementsByTagName("button")[0].classList.add("disabled");
+
+    if (redActive === true) {
+      clickedCircle.getElementsByTagName("button")[0].classList.add("red-clicked");
+    } else {
+      clickedCircle.getElementsByTagName("button")[0].classList.add("yellow-clicked");
+    }
+
+    setRedActive(!redActive);
+
+    let colNum = parseInt(location[1]);
+    let leftPercent = ((colNum - 1) * 14) + 5;
+    let leftPerStr = leftPercent.toString() + "%";
+    document.getElementById("marker").style.left = leftPerStr;
 
     if (location[3] !== "1") {
       let oneAbove = location[0] + location[1] + location[2] + parseInt(location[3] - 1).toString();
@@ -41,7 +57,7 @@ const PlayingBoard = ({ players, paused }) => {
       <div id="marker-cont">
         <img 
           id="marker"
-          src={marker}
+          src={redActive ? redMarker : yellowMarker}
           alt="marker"
         />
       </div>
@@ -187,7 +203,7 @@ const PlayingBoard = ({ players, paused }) => {
       </div>
       <div id="turn">
         <img
-          src={turn}
+          src={redActive ? redTurn: yellowTurn}
           alt="turn"
         />
         <p id="players-turn" className='heading-xs'>{players[0]}'s turn</p>

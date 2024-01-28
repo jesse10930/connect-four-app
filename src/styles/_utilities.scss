@@ -144,7 +144,7 @@
   border-radius: 50%;
   opacity: 0;
   z-index: 100;
-  
+
   &:hover{
     cursor: pointer;
   } 
@@ -154,6 +154,9 @@
   display: flex;
   justify-content: center;  
   align-items: center;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
 }
 
 // Disabled button
@@ -161,4 +164,16 @@
   &:hover {
     cursor: default;
   }
+}
+
+// Clicked circle
+.red-clicked {
+  background-color: $pink;
+  opacity: 100;
+}
+
+.yellow-clicked {
+  background-color: $yellow;
+  opacity: 100;
+  color: black;
 }

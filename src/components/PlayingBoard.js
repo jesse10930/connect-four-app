@@ -5,12 +5,20 @@ import blackBoard from '../starter-code/images/board-layer-black-large.svg';
 import whiteBoard from '../starter-code/images/board-layer-white-large.svg';
 import redTurn from '../starter-code/images/turn-background-red.svg';
 import yellowTurn from '../starter-code/images/turn-background-yellow.svg';
-import redCounter from '../starter-code/images/counter-red-large.svg';
-import yellowCounter from '../starter-code/images/counter-yellow-large.svg';
+// import redCounter from '../starter-code/images/counter-red-large.svg';
+// import yellowCounter from '../starter-code/images/counter-yellow-large.svg';
 
 const PlayingBoard = ({ players, paused }) => {
   const [timeRemaining, setTimeRemaining] = useState(30);
   const [redActive, setRedActive] = useState(true);
+  const [playingBoardArr, setPlayingBoardArr] = useState([
+    [[],[],[],[],[],[],[]],
+    [[],[],[],[],[],[],[]],
+    [[],[],[],[],[],[],[]],
+    [[],[],[],[],[],[],[]],
+    [[],[],[],[],[],[],[]],
+    [[],[],[],[],[],[],[]]
+  ])
 
   useEffect(() => {
     const myCountdown = setInterval(() => {
@@ -43,12 +51,52 @@ const PlayingBoard = ({ players, paused }) => {
     let leftPerStr = leftPercent.toString() + "%";
     document.getElementById("marker").style.left = leftPerStr;
 
+    let rowNum = parseInt(location[3]);
+
     if (location[3] !== "1") {
       let oneAbove = location[0] + location[1] + location[2] + parseInt(location[3] - 1).toString();
       let oneAboveClickedCircle = document.getElementById(oneAbove);
       oneAboveClickedCircle.getElementsByTagName("button")[0].removeAttribute("disabled", false);
       oneAboveClickedCircle.getElementsByTagName("button")[0].classList.remove("disabled");
-    } 
+    }
+
+    let newPlayingBoard = playingBoardArr;
+
+    if (redActive === true) {
+      newPlayingBoard[rowNum - 1][colNum - 1] = 'red'
+    } else {
+      newPlayingBoard[rowNum - 1][colNum - 1] = 'yellow'
+    }
+    setPlayingBoardArr(newPlayingBoard);
+
+    
+    for (let row = 0; row <= 5; row++) {
+      for (let col = 0; col <= 3; col++) {
+        let temp = newPlayingBoard[row][col] + newPlayingBoard[row][col + 1] + newPlayingBoard[row][col + 2] + newPlayingBoard[row][col + 3];
+        let tempActive = (redActive) ? "redredredred" : "yellowyellowyellowyellow";
+        if (temp === tempActive) {
+          let winningRow = row;
+          let winningCol = col;
+
+          console.log(winningRow, winningCol);
+          break;
+        }
+      }
+    }
+
+    for (let col = 0; col <= 6; col++) {
+      for (let row = 0; row <= 2; row++) {
+        let temp = newPlayingBoard[row][col] + newPlayingBoard[row + 1][col] + newPlayingBoard[row + 2][col] + newPlayingBoard[row + 3][col];
+        let tempActive = (redActive) ? "redredredred" : "yellowyellowyellowyellow";
+        if (temp === tempActive) {
+          let winningRow = row;
+          let winningCol = col;
+
+          console.log(winningRow, winningCol);
+          break;
+        }
+      }
+    }
   }
 
 

@@ -14,13 +14,18 @@ const GamePlay = ({callSetStarted, players}) => {
     sessionStorage.setItem("play2Score", 0);
   }, []);
 
-  const increaseScore = () => {
-    let newScore1 = Number(sessionStorage.getItem("play1Score")) + 1;
-    let newScore2 = Number(sessionStorage.getItem("play2Score")) + 2;
+  const increaseScore = (redActive) => {
+    let newScore1;
+    let newScore2; 
 
-    sessionStorage.setItem("play1Score", newScore1);
-    sessionStorage.setItem("play2Score", newScore2);
-
+    if (redActive) {
+      newScore1 = Number(sessionStorage.getItem("play1Score")) + 1;
+      sessionStorage.setItem("play1Score", newScore1);
+    } else {
+      newScore2 = Number(sessionStorage.getItem("play2Score")) + 1;
+      sessionStorage.setItem("play2Score", newScore2);
+    }
+    
     setScores([
       Number(sessionStorage.getItem("play1Score")), 
       Number(sessionStorage.getItem("play2Score"))
@@ -32,31 +37,32 @@ const GamePlay = ({callSetStarted, players}) => {
   }
 
   const restartGame = () => {
+    
     setPaused(false);
   }
 
-  const quitGame = () => {
-    callSetStarted();
-  }
+  // const quitGame = () => {
+  //   callSetStarted();
+  // }
 
-  const endOfGame = () => {
-    console.log('hey')
+  // const endOfGame = () => {
     // get who won
     // increase that player's score
     // increase the numOfGames
     // reset the board
-  }
+  // }
 
   const menuClick = () => {
     setPaused(true);
   }
 
+
   return (
     <Fragment>
       {paused && 
-      <Pause 
+      <Pause
         contGame={contGame}
-        quitGame={quitGame} 
+        // quitGame={quitGame}
         restartGame={restartGame}
       />
       }
@@ -68,7 +74,7 @@ const GamePlay = ({callSetStarted, players}) => {
             src={logo}
             alt="logo"
           />
-          <button id="restart-btn" className='sm-prpl-btn heading-xs'>restart</button>
+          <button id="restart-btn" className='sm-prpl-btn heading-xs' onClick={restartGame}>restart</button>
         </div>
         <div id="game-board">
           <ScoreBoard
@@ -78,6 +84,7 @@ const GamePlay = ({callSetStarted, players}) => {
           <PlayingBoard
             players={players}
             paused={paused}
+            increaseScore={increaseScore}
           />
           <ScoreBoard
             player={players[1]}

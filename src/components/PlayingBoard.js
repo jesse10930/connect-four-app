@@ -8,7 +8,7 @@ import yellowTurn from '../starter-code/images/turn-background-yellow.svg';
 // import redCounter from '../starter-code/images/counter-red-large.svg';
 // import yellowCounter from '../starter-code/images/counter-yellow-large.svg';
 
-const PlayingBoard = ({ players, paused }) => {
+const PlayingBoard = ({ players, paused, increaseScore }) => {
   const [timeRemaining, setTimeRemaining] = useState(30);
   const [redActive, setRedActive] = useState(true);
   const [playingBoardArr, setPlayingBoardArr] = useState([
@@ -79,6 +79,7 @@ const PlayingBoard = ({ players, paused }) => {
           let winningCol = col;
 
           console.log(winningRow, winningCol);
+          increaseScore(redActive);
           break;
         }
       }
@@ -93,10 +94,43 @@ const PlayingBoard = ({ players, paused }) => {
           let winningCol = col;
 
           console.log(winningRow, winningCol);
+          increaseScore(redActive);
           break;
         }
       }
     }
+
+    for (let col = 1; col <= 4; col++) {
+      for (let row = 4; row <= 6; row++) {
+        let temp = newPlayingBoard[row - 1][col - 1] + newPlayingBoard[row - 2][col] + newPlayingBoard[row - 3][col + 1] + newPlayingBoard[row - 4][col + 2];
+        let tempActive = (redActive) ? "redredredred" : "yellowyellowyellowyellow";
+        if (temp === tempActive) {
+          let winningRow = row;
+          let winningCol = col;
+
+          console.log(winningRow, winningCol);
+          increaseScore(redActive);
+          break;
+        }
+      }
+    }
+
+    for (let col = 1; col <= 4; col++) {
+      for (let row = 1; row <= 3; row++) {
+        let temp = newPlayingBoard[row - 1][col - 1] + newPlayingBoard[row][col] + newPlayingBoard[row][col] + newPlayingBoard[row][col];
+        let tempActive = (redActive) ? "redredredred" : "yellowyellowyellowyellow";
+        if (temp === tempActive) {
+          let winningRow = row;
+          let winningCol = col;
+
+          console.log(winningRow, winningCol);
+          increaseScore(redActive);
+          break;
+        }
+      }
+    }
+
+    setTimeRemaining(30);
   }
 
 

@@ -37,13 +37,12 @@ const GamePlay = ({callSetStarted, players}) => {
   }
 
   const restartGame = () => {
-    
     setPaused(false);
   }
 
-  // const quitGame = () => {
-  //   callSetStarted();
-  // }
+  const quitGame = () => {
+    callSetStarted();
+  }
 
   // const endOfGame = () => {
     // get who won
@@ -56,13 +55,17 @@ const GamePlay = ({callSetStarted, players}) => {
     setPaused(true);
   }
 
+  const changeBotColor = () => {
+    document.getElementById("bot-shadow").style.backgroundColor = "yellow";
+  }
+
 
   return (
     <Fragment>
       {paused && 
       <Pause
         contGame={contGame}
-        // quitGame={quitGame}
+        quitGame={quitGame}
         restartGame={restartGame}
       />
       }
@@ -84,7 +87,9 @@ const GamePlay = ({callSetStarted, players}) => {
           <PlayingBoard
             players={players}
             paused={paused}
+            setPaused={setPaused}
             increaseScore={increaseScore}
+            changeBotColor={changeBotColor}
           />
           <ScoreBoard
             player={players[1]}

@@ -8,7 +8,7 @@ import yellowTurn from '../starter-code/images/turn-background-yellow.svg';
 // import redCounter from '../starter-code/images/counter-red-large.svg';
 // import yellowCounter from '../starter-code/images/counter-yellow-large.svg';
 
-const PlayingBoard = ({ players, paused, increaseScore }) => {
+const PlayingBoard = ({ players, paused, increaseScore, changeBotColor }) => {
   const [timeRemaining, setTimeRemaining] = useState(30);
   const [redActive, setRedActive] = useState(true);
   const [playingBoardArr, setPlayingBoardArr] = useState([
@@ -67,9 +67,15 @@ const PlayingBoard = ({ players, paused, increaseScore }) => {
     } else {
       newPlayingBoard[rowNum - 1][colNum - 1] = 'yellow'
     }
+    
     setPlayingBoardArr(newPlayingBoard);
 
-    
+    horizontalCheck(newPlayingBoard);
+
+    setTimeRemaining(30);
+  }
+
+  const horizontalCheck = (newPlayingBoard) => {
     for (let row = 0; row <= 5; row++) {
       for (let col = 0; col <= 3; col++) {
         let temp = newPlayingBoard[row][col] + newPlayingBoard[row][col + 1] + newPlayingBoard[row][col + 2] + newPlayingBoard[row][col + 3];
@@ -78,13 +84,17 @@ const PlayingBoard = ({ players, paused, increaseScore }) => {
           let winningRow = row;
           let winningCol = col;
 
-          console.log(winningRow, winningCol);
-          increaseScore(redActive);
+          endGame(redActive, winningRow, winningCol);
           break;
         }
       }
     }
 
+    verticalCheck(newPlayingBoard);
+  }
+
+
+  const verticalCheck = (newPlayingBoard) => {
     for (let col = 0; col <= 6; col++) {
       for (let row = 0; row <= 2; row++) {
         let temp = newPlayingBoard[row][col] + newPlayingBoard[row + 1][col] + newPlayingBoard[row + 2][col] + newPlayingBoard[row + 3][col];
@@ -93,13 +103,16 @@ const PlayingBoard = ({ players, paused, increaseScore }) => {
           let winningRow = row;
           let winningCol = col;
 
-          console.log(winningRow, winningCol);
-          increaseScore(redActive);
+          endGame(redActive, winningRow, winningCol);
           break;
         }
       }
     }
 
+    diagonalUpCheck(newPlayingBoard);
+  }
+
+  const diagonalUpCheck = (newPlayingBoard) => {
     for (let col = 1; col <= 4; col++) {
       for (let row = 4; row <= 6; row++) {
         let temp = newPlayingBoard[row - 1][col - 1] + newPlayingBoard[row - 2][col] + newPlayingBoard[row - 3][col + 1] + newPlayingBoard[row - 4][col + 2];
@@ -108,29 +121,35 @@ const PlayingBoard = ({ players, paused, increaseScore }) => {
           let winningRow = row;
           let winningCol = col;
 
-          console.log(winningRow, winningCol);
-          increaseScore(redActive);
+          endGame(redActive, winningRow, winningCol);
           break;
         }
       }
     }
 
+    diagonalDownCheck(newPlayingBoard);
+  }
+
+  const diagonalDownCheck = (newPlayingBoard) => {
     for (let col = 1; col <= 4; col++) {
       for (let row = 1; row <= 3; row++) {
-        let temp = newPlayingBoard[row - 1][col - 1] + newPlayingBoard[row][col] + newPlayingBoard[row][col] + newPlayingBoard[row][col];
+        let temp = newPlayingBoard[row - 1][col - 1] + newPlayingBoard[row][col] + newPlayingBoard[row + 1][col + 1] + newPlayingBoard[row + 2][col + 2];
         let tempActive = (redActive) ? "redredredred" : "yellowyellowyellowyellow";
         if (temp === tempActive) {
           let winningRow = row;
           let winningCol = col;
 
-          console.log(winningRow, winningCol);
-          increaseScore(redActive);
+          endGame(redActive, winningRow, winningCol);
           break;
         }
       }
     }
+  }
 
-    setTimeRemaining(30);
+
+  const endGame = (redActive, winningRow, winningCol) => {
+    increaseScore(redActive);
+    changeBotColor(redActive);
   }
 
 
@@ -288,7 +307,7 @@ const PlayingBoard = ({ players, paused, increaseScore }) => {
           src={redActive ? redTurn: yellowTurn}
           alt="turn"
         />
-        <p id="players-turn" className='heading-xs'>{players[0]}'s turn</p>
+        <p id="players-turn" className='heading-xs'>{(redActive) ? players[0] : players[1]}'s turn</p>
         <p id="time" className="heading-l">{timeRemaining}</p>
       </div>      
     </div>

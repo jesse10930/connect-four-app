@@ -7,6 +7,7 @@ import redTurn from '../starter-code/images/turn-background-red.svg';
 import yellowTurn from '../starter-code/images/turn-background-yellow.svg';
 // import redCounter from '../starter-code/images/counter-red-large.svg';
 // import yellowCounter from '../starter-code/images/counter-yellow-large.svg';
+import WinnerBoard from '../components/WinnerBoard';
 
 const PlayingBoard = ({ players, paused, increaseScore, changeBotColor }) => {
   const [timeRemaining, setTimeRemaining] = useState(30);
@@ -19,6 +20,7 @@ const PlayingBoard = ({ players, paused, increaseScore, changeBotColor }) => {
     [[],[],[],[],[],[],[]],
     [[],[],[],[],[],[],[]]
   ])
+  const [winner, setWinner] = useState(false);
 
   useEffect(() => {
     const myCountdown = setInterval(() => {
@@ -148,6 +150,7 @@ const PlayingBoard = ({ players, paused, increaseScore, changeBotColor }) => {
 
 
   const endGame = (redActive, winningRow, winningCol) => {
+    setWinner(true);
     increaseScore(redActive);
     changeBotColor(redActive);
   }
@@ -302,14 +305,21 @@ const PlayingBoard = ({ players, paused, increaseScore, changeBotColor }) => {
           </div>
         </div>
       </div>
-      <div id="turn">
-        <img
-          src={redActive ? redTurn: yellowTurn}
-          alt="turn"
+      {(!winner) ? 
+        <div id="turn">
+          <img
+            src={redActive ? redTurn: yellowTurn}
+            alt="turn"
+          />
+          <p id="players-turn" className='heading-xs'>{(redActive) ? players[0] : players[1]}'s turn</p>
+          <p id="time" className="heading-l">{timeRemaining}</p>
+        </div> 
+        : 
+        <WinnerBoard 
+          redActive={redActive}
+          players={players}
         />
-        <p id="players-turn" className='heading-xs'>{(redActive) ? players[0] : players[1]}'s turn</p>
-        <p id="time" className="heading-l">{timeRemaining}</p>
-      </div>      
+      }
     </div>
   )
 }

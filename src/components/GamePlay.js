@@ -55,8 +55,8 @@ const GamePlay = ({callSetStarted, players}) => {
     setPaused(true);
   }
 
-  const changeBotColor = () => {
-    document.getElementById("bot-shadow").style.backgroundColor = "yellow";
+  const changeBotColor = (redActive) => {
+    redActive ? document.getElementById("bot-shadow").style.backgroundColor = "#fd6687" : document.getElementById("bot-shadow").style.backgroundColor = "#ffce67";
   }
 
 

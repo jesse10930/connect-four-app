@@ -9,7 +9,7 @@ import yellowTurn from '../starter-code/images/turn-background-yellow.svg';
 // import yellowCounter from '../starter-code/images/counter-yellow-large.svg';
 import WinnerBoard from '../components/WinnerBoard';
 
-const PlayingBoard = ({ players, paused, increaseScore, changeBotColor }) => {
+const PlayingBoard = ({ players, paused, increaseScore, changeBotColor, winner, callSetWinner }) => {
   const [timeRemaining, setTimeRemaining] = useState(30);
   const [redActive, setRedActive] = useState(true);
   const [playingBoardArr, setPlayingBoardArr] = useState([
@@ -20,13 +20,18 @@ const PlayingBoard = ({ players, paused, increaseScore, changeBotColor }) => {
     [[],[],[],[],[],[],[]],
     [[],[],[],[],[],[],[]]
   ])
-  const [winner, setWinner] = useState(false);
+  const [pauseTimer, setPauseTimer] = useState(false);
 
   useEffect(() => {
     const myCountdown = setInterval(() => {
-      if(!paused) {
+      if(!pauseTimer) {
         if(timeRemaining > 0) {
           setTimeRemaining(timeRemaining - 1)
+        }
+        else {
+          endGame(redActive, null, null);
+          setPauseTimer(true);
+          clearInterval(myCountdown);
         }
       }
     }, 987);
@@ -150,10 +155,162 @@ const PlayingBoard = ({ players, paused, increaseScore, changeBotColor }) => {
 
 
   const endGame = (redActive, winningRow, winningCol) => {
-    setWinner(true);
     increaseScore(redActive);
     changeBotColor(redActive);
+    callSetWinner();
+    setPlayingBoardArr([
+      [[],[],[],[],[],[],[]],
+      [[],[],[],[],[],[],[]],
+      [[],[],[],[],[],[],[]],
+      [[],[],[],[],[],[],[]],
+      [[],[],[],[],[],[],[]],
+      [[],[],[],[],[],[],[]]
+    ]);
+    initPlayBoard = initPlayBoard;
+
   }
+
+  let initPlayBoard = 
+    (<div id='playingboard'>
+    <div id='buttons-div'>
+      <img
+        id="blackboard"
+        src={blackBoard}
+        alt="black-board"
+      />
+      <img
+        id="whiteboard"
+        src={whiteBoard}
+        alt="white-board"
+      />
+      <div id="c1r1" className="circle-cont" onClick={onCircleClick}>
+        <button className="spaceBtn disabled" disabled={true} onClick={onCircleClick}></button>
+      </div>
+      <div id="c2r1" className="circle-cont" onClick={onCircleClick}>
+        <button className="spaceBtn disabled" disabled={true} onClick={onCircleClick}></button>
+      </div>
+      <div id="c3r1" className="circle-cont" onClick={onCircleClick}>
+        <button className="spaceBtn disabled" disabled={true} onClick={onCircleClick}></button>
+      </div>
+      <div id="c4r1" className="circle-cont" onClick={onCircleClick}>
+        <button className="spaceBtn disabled" disabled={true} onClick={onCircleClick}></button>
+      </div>
+      <div id="c5r1" className="circle-cont" onClick={onCircleClick}>
+        <button className="spaceBtn disabled" disabled={true} onClick={onCircleClick}></button>
+      </div>
+      <div id="c6r1" className="circle-cont" onClick={onCircleClick}>
+        <button className="spaceBtn disabled" disabled={true} onClick={onCircleClick}></button>
+      </div>
+      <div id="c7r1" className="circle-cont" onClick={onCircleClick}>
+        <button className="spaceBtn disabled" disabled={true} onClick={onCircleClick}></button>
+      </div>
+      <div id="c1r2" className="circle-cont" onClick={onCircleClick}>
+        <button className="spaceBtn disabled" disabled={true} onClick={onCircleClick}></button>
+      </div>
+      <div id="c2r2" className="circle-cont" onClick={onCircleClick}>
+        <button className="spaceBtn disabled" disabled={true} onClick={onCircleClick}></button>
+      </div>
+      <div id="c3r2" className="circle-cont" onClick={onCircleClick}>
+        <button className="spaceBtn disabled" disabled={true} onClick={onCircleClick}></button>
+      </div>
+      <div id="c4r2" className="circle-cont" onClick={onCircleClick}>
+        <button className="spaceBtn disabled" disabled={true} onClick={onCircleClick}></button>
+      </div>
+      <div id="c5r2" className="circle-cont" onClick={onCircleClick}>
+        <button className="spaceBtn disabled" disabled={true} onClick={onCircleClick}></button>
+      </div>
+      <div id="c6r2" className="circle-cont" onClick={onCircleClick}>
+        <button className="spaceBtn disabled" disabled={true} onClick={onCircleClick}></button>
+      </div>
+      <div id="c7r2" className="circle-cont" onClick={onCircleClick}>
+        <button className="spaceBtn disabled" disabled={true} onClick={onCircleClick}></button>
+      </div>
+      <div id="c1r3" className="circle-cont" onClick={onCircleClick}>
+        <button className="spaceBtn disabled" disabled={true} onClick={onCircleClick}></button>
+      </div>
+      <div id="c2r3" className="circle-cont" onClick={onCircleClick}>
+        <button className="spaceBtn disabled" disabled={true} onClick={onCircleClick}></button>
+      </div>
+      <div id="c3r3" className="circle-cont" onClick={onCircleClick}>
+        <button className="spaceBtn disabled" disabled={true} onClick={onCircleClick}></button>
+      </div>
+      <div id="c4r3" className="circle-cont" onClick={onCircleClick}>
+        <button className="spaceBtn disabled" disabled={true} onClick={onCircleClick}></button>
+      </div>
+      <div id="c5r3" className="circle-cont" onClick={onCircleClick}>
+        <button className="spaceBtn disabled" disabled={true} onClick={onCircleClick}></button>
+      </div>
+      <div id="c6r3" className="circle-cont" onClick={onCircleClick}>
+        <button className="spaceBtn disabled" disabled={true} onClick={onCircleClick}></button>
+      </div>
+      <div id="c7r3" className="circle-cont" onClick={onCircleClick}>
+        <button className="spaceBtn disabled" disabled={true} onClick={onCircleClick}></button>
+      </div>
+      <div id="c1r4" className="circle-cont"onClick={onCircleClick}>
+        <button className="spaceBtn disabled" disabled={true} onClick={onCircleClick}></button>
+      </div>
+      <div id="c2r4" className="circle-cont"onClick={onCircleClick}>
+        <button className="spaceBtn disabled" disabled={true} onClick={onCircleClick}></button>
+      </div>
+      <div id="c3r4" className="circle-cont"onClick={onCircleClick}>
+        <button className="spaceBtn disabled" disabled={true} onClick={onCircleClick}></button>
+      </div>
+      <div id="c4r4" className="circle-cont"onClick={onCircleClick}>
+        <button className="spaceBtn disabled" disabled={true} onClick={onCircleClick}></button>
+      </div>
+      <div id="c5r4" className="circle-cont"onClick={onCircleClick}>
+        <button className="spaceBtn disabled" disabled={true} onClick={onCircleClick}></button>
+      </div>
+      <div id="c6r4" className="circle-cont"onClick={onCircleClick}>
+        <button className="spaceBtn disabled" disabled={true} onClick={onCircleClick}></button>
+      </div>
+      <div id="c7r4" className="circle-cont"onClick={onCircleClick}>
+        <button className="spaceBtn disabled" disabled={true} onClick={onCircleClick}></button>
+      </div>
+      <div id="c1r5" className="circle-cont"onClick={onCircleClick}>
+        <button className="spaceBtn disabled" disabled={true} onClick={onCircleClick}></button>
+      </div>
+      <div id="c2r5" className="circle-cont"onClick={onCircleClick}>
+        <button className="spaceBtn disabled" disabled={true} onClick={onCircleClick}></button>
+      </div>
+      <div id="c3r5" className="circle-cont"onClick={onCircleClick}>
+        <button className="spaceBtn disabled" disabled={true} onClick={onCircleClick}></button>
+      </div>
+      <div id="c4r5" className="circle-cont"onClick={onCircleClick}>
+        <button className="spaceBtn disabled" disabled={true} onClick={onCircleClick}></button>
+      </div>
+      <div id="c5r5" className="circle-cont"onClick={onCircleClick}>
+        <button className="spaceBtn disabled" disabled={true} onClick={onCircleClick}></button>
+      </div>
+      <div id="c6r5" className="circle-cont"onClick={onCircleClick}>
+        <button className="spaceBtn disabled" disabled={true} onClick={onCircleClick}></button>
+      </div>
+      <div id="c7r5" className="circle-cont" onClick={onCircleClick}>
+        <button className="spaceBtn disabled" disabled={true} onClick={onCircleClick}></button>
+      </div>
+      <div id="c1r6" className="circle-cont">
+        <button className="spaceBtn" disabled={false} onClick={onCircleClick}></button>
+      </div>
+      <div id="c2r6" className="circle-cont">
+        <button className="spaceBtn" disabled={false} onClick={onCircleClick}></button>
+      </div>
+      <div id="c3r6" className="circle-cont">
+        <button className="spaceBtn" disabled={false} onClick={onCircleClick}></button>
+      </div>
+      <div id="c4r6" className="circle-cont">
+        <button className="spaceBtn" disabled={false} onClick={onCircleClick}></button>
+      </div>
+      <div id="c5r6" className="circle-cont">
+        <button className="spaceBtn" disabled={false} onClick={onCircleClick}></button>
+      </div>
+      <div id="c6r6" className="circle-cont">
+        <button className="spaceBtn" disabled={false} onClick={onCircleClick}></button>
+      </div>
+      <div id="c7r6" className="circle-cont">
+        <button className="spaceBtn" disabled={false} onClick={onCircleClick}></button>
+      </div>
+    </div>
+  </div>)
 
 
   return (
@@ -165,7 +322,8 @@ const PlayingBoard = ({ players, paused, increaseScore, changeBotColor }) => {
           alt="marker"
         />
       </div>
-      <div id='playingboard'>
+      {initPlayBoard}
+      {/* <div id='playingboard'>
         <div id='buttons-div'>
           <img
             id="blackboard"
@@ -304,7 +462,7 @@ const PlayingBoard = ({ players, paused, increaseScore, changeBotColor }) => {
             <button className="spaceBtn" disabled={false} onClick={onCircleClick}></button>
           </div>
         </div>
-      </div>
+      </div> */}
       {(!winner) ? 
         <div id="turn">
           <img

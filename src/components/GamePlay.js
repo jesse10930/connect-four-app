@@ -4,10 +4,11 @@ import PlayingBoard from './PlayingBoard';
 import Pause from './Pause';
 import logo from '../starter-code/images/logo.svg';
 
-const GamePlay = ({callSetStarted, players}) => {
+const GamePlay = ({callSetStarted, players, gameStartStop}) => {
   const [scores, setScores] = useState([0, 0]);
   const [numOfGames, setNumOfGames] = useState(1);
   const [paused, setPaused] = useState(false);
+  const [winner, setWinner] = useState(false);
   
   useEffect(() => {
     sessionStorage.setItem("play1Score", 0);
@@ -42,6 +43,10 @@ const GamePlay = ({callSetStarted, players}) => {
 
   const quitGame = () => {
     callSetStarted();
+  }
+
+  const callSetWinner = () => {
+    setWinner(true);
   }
 
   // const endOfGame = () => {
@@ -87,9 +92,10 @@ const GamePlay = ({callSetStarted, players}) => {
           <PlayingBoard
             players={players}
             paused={paused}
-            setPaused={setPaused}
+            winner={winner}
             increaseScore={increaseScore}
             changeBotColor={changeBotColor}
+            callSetWinner={callSetWinner}
           />
           <ScoreBoard
             player={players[1]}

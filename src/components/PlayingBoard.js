@@ -9,6 +9,15 @@ import yellowTurn from '../starter-code/images/turn-background-yellow.svg';
 // import yellowCounter from '../starter-code/images/counter-yellow-large.svg';
 import WinnerBoard from '../components/WinnerBoard';
 
+const initBoard = [
+  [true, true, true, true, true, true, true],
+  [true, true, true, true, true, true, true],
+  [true, true, true, true, true, true, true],
+  [true, true, true, true, true, true, true],
+  [true, true, true, true, true, true, true],
+  [false, false, false, false, false, false, false],
+]
+
 const PlayingBoard = ({ players, paused, increaseScore, changeBotColor, winner, callSetWinner }) => {
   const [timeRemaining, setTimeRemaining] = useState(30);
   const [redActive, setRedActive] = useState(true);
@@ -19,7 +28,8 @@ const PlayingBoard = ({ players, paused, increaseScore, changeBotColor, winner, 
     [[],[],[],[],[],[],[]],
     [[],[],[],[],[],[],[]],
     [[],[],[],[],[],[],[]]
-  ])
+  ]);
+  const [board, setBoard] = useState(initBoard);
   const [pauseTimer, setPauseTimer] = useState(false);
 
   useEffect(() => {
@@ -42,44 +52,45 @@ const PlayingBoard = ({ players, paused, increaseScore, changeBotColor, winner, 
     let location = e.target.parentNode.id;
 
     let clickedCircle = document.getElementById(location);
+    console.log(clickedCircle);
     clickedCircle.getElementsByTagName("button")[0].setAttribute("disabled", true);
     clickedCircle.getElementsByTagName("button")[0].classList.add("disabled");
 
-    if (redActive === true) {
-      clickedCircle.getElementsByTagName("button")[0].classList.add("red-clicked");
-    } else {
-      clickedCircle.getElementsByTagName("button")[0].classList.add("yellow-clicked");
-    }
+    // if (redActive === true) {
+    //   clickedCircle.getElementsByTagName("button")[0].classList.add("red-clicked");
+    // } else {
+    //   clickedCircle.getElementsByTagName("button")[0].classList.add("yellow-clicked");
+    // }
 
-    setRedActive(!redActive);
+    // setRedActive(!redActive);
 
-    let colNum = parseInt(location[1]);
-    let leftPercent = ((colNum - 1) * 14) + 5;
-    let leftPerStr = leftPercent.toString() + "%";
-    document.getElementById("marker").style.left = leftPerStr;
+    // let colNum = parseInt(location[1]);
+    // let leftPercent = ((colNum - 1) * 14) + 5;
+    // let leftPerStr = leftPercent.toString() + "%";
+    // document.getElementById("marker").style.left = leftPerStr;
 
-    let rowNum = parseInt(location[3]);
+    // let rowNum = parseInt(location[3]);
 
-    if (location[3] !== "1") {
-      let oneAbove = location[0] + location[1] + location[2] + parseInt(location[3] - 1).toString();
-      let oneAboveClickedCircle = document.getElementById(oneAbove);
-      oneAboveClickedCircle.getElementsByTagName("button")[0].removeAttribute("disabled", false);
-      oneAboveClickedCircle.getElementsByTagName("button")[0].classList.remove("disabled");
-    }
+    // if (location[3] !== "1") {
+    //   let oneAbove = location[0] + location[1] + location[2] + parseInt(location[3] - 1).toString();
+    //   let oneAboveClickedCircle = document.getElementById(oneAbove);
+    //   oneAboveClickedCircle.getElementsByTagName("button")[0].removeAttribute("disabled", false);
+    //   oneAboveClickedCircle.getElementsByTagName("button")[0].classList.remove("disabled");
+    // }
 
-    let newPlayingBoard = playingBoardArr;
+    // let newPlayingBoard = playingBoardArr;
 
-    if (redActive === true) {
-      newPlayingBoard[rowNum - 1][colNum - 1] = 'red'
-    } else {
-      newPlayingBoard[rowNum - 1][colNum - 1] = 'yellow'
-    }
+    // if (redActive === true) {
+    //   newPlayingBoard[rowNum - 1][colNum - 1] = 'red'
+    // } else {
+    //   newPlayingBoard[rowNum - 1][colNum - 1] = 'yellow'
+    // }
     
-    setPlayingBoardArr(newPlayingBoard);
+    // setPlayingBoardArr(newPlayingBoard);
 
-    horizontalCheck(newPlayingBoard);
+    // horizontalCheck(newPlayingBoard);
 
-    setTimeRemaining(30);
+    // setTimeRemaining(30);
   }
 
   const horizontalCheck = (newPlayingBoard) => {
@@ -166,151 +177,37 @@ const PlayingBoard = ({ players, paused, increaseScore, changeBotColor, winner, 
       [[],[],[],[],[],[],[]],
       [[],[],[],[],[],[],[]]
     ]);
-    initPlayBoard = initPlayBoard;
-
   }
 
-  let initPlayBoard = 
-    (<div id='playingboard'>
-    <div id='buttons-div'>
-      <img
-        id="blackboard"
-        src={blackBoard}
-        alt="black-board"
-      />
-      <img
-        id="whiteboard"
-        src={whiteBoard}
-        alt="white-board"
-      />
-      <div id="c1r1" className="circle-cont" onClick={onCircleClick}>
-        <button className="spaceBtn disabled" disabled={true} onClick={onCircleClick}></button>
-      </div>
-      <div id="c2r1" className="circle-cont" onClick={onCircleClick}>
-        <button className="spaceBtn disabled" disabled={true} onClick={onCircleClick}></button>
-      </div>
-      <div id="c3r1" className="circle-cont" onClick={onCircleClick}>
-        <button className="spaceBtn disabled" disabled={true} onClick={onCircleClick}></button>
-      </div>
-      <div id="c4r1" className="circle-cont" onClick={onCircleClick}>
-        <button className="spaceBtn disabled" disabled={true} onClick={onCircleClick}></button>
-      </div>
-      <div id="c5r1" className="circle-cont" onClick={onCircleClick}>
-        <button className="spaceBtn disabled" disabled={true} onClick={onCircleClick}></button>
-      </div>
-      <div id="c6r1" className="circle-cont" onClick={onCircleClick}>
-        <button className="spaceBtn disabled" disabled={true} onClick={onCircleClick}></button>
-      </div>
-      <div id="c7r1" className="circle-cont" onClick={onCircleClick}>
-        <button className="spaceBtn disabled" disabled={true} onClick={onCircleClick}></button>
-      </div>
-      <div id="c1r2" className="circle-cont" onClick={onCircleClick}>
-        <button className="spaceBtn disabled" disabled={true} onClick={onCircleClick}></button>
-      </div>
-      <div id="c2r2" className="circle-cont" onClick={onCircleClick}>
-        <button className="spaceBtn disabled" disabled={true} onClick={onCircleClick}></button>
-      </div>
-      <div id="c3r2" className="circle-cont" onClick={onCircleClick}>
-        <button className="spaceBtn disabled" disabled={true} onClick={onCircleClick}></button>
-      </div>
-      <div id="c4r2" className="circle-cont" onClick={onCircleClick}>
-        <button className="spaceBtn disabled" disabled={true} onClick={onCircleClick}></button>
-      </div>
-      <div id="c5r2" className="circle-cont" onClick={onCircleClick}>
-        <button className="spaceBtn disabled" disabled={true} onClick={onCircleClick}></button>
-      </div>
-      <div id="c6r2" className="circle-cont" onClick={onCircleClick}>
-        <button className="spaceBtn disabled" disabled={true} onClick={onCircleClick}></button>
-      </div>
-      <div id="c7r2" className="circle-cont" onClick={onCircleClick}>
-        <button className="spaceBtn disabled" disabled={true} onClick={onCircleClick}></button>
-      </div>
-      <div id="c1r3" className="circle-cont" onClick={onCircleClick}>
-        <button className="spaceBtn disabled" disabled={true} onClick={onCircleClick}></button>
-      </div>
-      <div id="c2r3" className="circle-cont" onClick={onCircleClick}>
-        <button className="spaceBtn disabled" disabled={true} onClick={onCircleClick}></button>
-      </div>
-      <div id="c3r3" className="circle-cont" onClick={onCircleClick}>
-        <button className="spaceBtn disabled" disabled={true} onClick={onCircleClick}></button>
-      </div>
-      <div id="c4r3" className="circle-cont" onClick={onCircleClick}>
-        <button className="spaceBtn disabled" disabled={true} onClick={onCircleClick}></button>
-      </div>
-      <div id="c5r3" className="circle-cont" onClick={onCircleClick}>
-        <button className="spaceBtn disabled" disabled={true} onClick={onCircleClick}></button>
-      </div>
-      <div id="c6r3" className="circle-cont" onClick={onCircleClick}>
-        <button className="spaceBtn disabled" disabled={true} onClick={onCircleClick}></button>
-      </div>
-      <div id="c7r3" className="circle-cont" onClick={onCircleClick}>
-        <button className="spaceBtn disabled" disabled={true} onClick={onCircleClick}></button>
-      </div>
-      <div id="c1r4" className="circle-cont"onClick={onCircleClick}>
-        <button className="spaceBtn disabled" disabled={true} onClick={onCircleClick}></button>
-      </div>
-      <div id="c2r4" className="circle-cont"onClick={onCircleClick}>
-        <button className="spaceBtn disabled" disabled={true} onClick={onCircleClick}></button>
-      </div>
-      <div id="c3r4" className="circle-cont"onClick={onCircleClick}>
-        <button className="spaceBtn disabled" disabled={true} onClick={onCircleClick}></button>
-      </div>
-      <div id="c4r4" className="circle-cont"onClick={onCircleClick}>
-        <button className="spaceBtn disabled" disabled={true} onClick={onCircleClick}></button>
-      </div>
-      <div id="c5r4" className="circle-cont"onClick={onCircleClick}>
-        <button className="spaceBtn disabled" disabled={true} onClick={onCircleClick}></button>
-      </div>
-      <div id="c6r4" className="circle-cont"onClick={onCircleClick}>
-        <button className="spaceBtn disabled" disabled={true} onClick={onCircleClick}></button>
-      </div>
-      <div id="c7r4" className="circle-cont"onClick={onCircleClick}>
-        <button className="spaceBtn disabled" disabled={true} onClick={onCircleClick}></button>
-      </div>
-      <div id="c1r5" className="circle-cont"onClick={onCircleClick}>
-        <button className="spaceBtn disabled" disabled={true} onClick={onCircleClick}></button>
-      </div>
-      <div id="c2r5" className="circle-cont"onClick={onCircleClick}>
-        <button className="spaceBtn disabled" disabled={true} onClick={onCircleClick}></button>
-      </div>
-      <div id="c3r5" className="circle-cont"onClick={onCircleClick}>
-        <button className="spaceBtn disabled" disabled={true} onClick={onCircleClick}></button>
-      </div>
-      <div id="c4r5" className="circle-cont"onClick={onCircleClick}>
-        <button className="spaceBtn disabled" disabled={true} onClick={onCircleClick}></button>
-      </div>
-      <div id="c5r5" className="circle-cont"onClick={onCircleClick}>
-        <button className="spaceBtn disabled" disabled={true} onClick={onCircleClick}></button>
-      </div>
-      <div id="c6r5" className="circle-cont"onClick={onCircleClick}>
-        <button className="spaceBtn disabled" disabled={true} onClick={onCircleClick}></button>
-      </div>
-      <div id="c7r5" className="circle-cont" onClick={onCircleClick}>
-        <button className="spaceBtn disabled" disabled={true} onClick={onCircleClick}></button>
-      </div>
-      <div id="c1r6" className="circle-cont">
-        <button className="spaceBtn" disabled={false} onClick={onCircleClick}></button>
-      </div>
-      <div id="c2r6" className="circle-cont">
-        <button className="spaceBtn" disabled={false} onClick={onCircleClick}></button>
-      </div>
-      <div id="c3r6" className="circle-cont">
-        <button className="spaceBtn" disabled={false} onClick={onCircleClick}></button>
-      </div>
-      <div id="c4r6" className="circle-cont">
-        <button className="spaceBtn" disabled={false} onClick={onCircleClick}></button>
-      </div>
-      <div id="c5r6" className="circle-cont">
-        <button className="spaceBtn" disabled={false} onClick={onCircleClick}></button>
-      </div>
-      <div id="c6r6" className="circle-cont">
-        <button className="spaceBtn" disabled={false} onClick={onCircleClick}></button>
-      </div>
-      <div id="c7r6" className="circle-cont">
-        <button className="spaceBtn" disabled={false} onClick={onCircleClick}></button>
+  let initPlayBoard = (
+    <div id='playingboard'>
+      <div id='buttons-div'>
+        <img
+          id="blackboard"
+          src={blackBoard}
+          alt="black-board"
+        />
+        <img
+          id="whiteboard"
+          src={whiteBoard}
+          alt="white-board"
+        />
+        {board.map((row, rowIndex) => (
+          row.map((disabled, colIndex) => (
+            <div key={rowIndex + colIndex} id={rowIndex.toString() + colIndex.toString()} className="circle-cont">
+              <button 
+                key={colIndex} 
+                className={`${disabled ? 'disabled' : ''} spaceBtn`}
+                onClick={(e) => onCircleClick(e)}
+                disabled={disabled}
+              >
+              </button>
+            </div>
+          ))
+        ))}
       </div>
     </div>
-  </div>)
+  )
 
 
   return (

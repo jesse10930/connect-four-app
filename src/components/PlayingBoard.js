@@ -21,16 +21,18 @@ const initBoard = [
 const PlayingBoard = ({ players, paused, increaseScore, changeBotColor, winner, callSetWinner }) => {
   const [timeRemaining, setTimeRemaining] = useState(30);
   const [redActive, setRedActive] = useState(true);
-  const [playingBoardArr, setPlayingBoardArr] = useState([
-    [[],[],[],[],[],[],[]],
-    [[],[],[],[],[],[],[]],
-    [[],[],[],[],[],[],[]],
-    [[],[],[],[],[],[],[]],
-    [[],[],[],[],[],[],[]],
-    [[],[],[],[],[],[],[]]
-  ]);
+  // const [playingBoardArr, setPlayingBoardArr] = useState([
+  //   [[],[],[],[],[],[],[]],
+  //   [[],[],[],[],[],[],[]],
+  //   [[],[],[],[],[],[],[]],
+  //   [[],[],[],[],[],[],[]],
+  //   [[],[],[],[],[],[],[]],
+  //   [[],[],[],[],[],[],[]]
+  // ]);
   const [board, setBoard] = useState(initBoard);
   const [pauseTimer, setPauseTimer] = useState(false);
+
+  console.log('rendered');
 
   // Useeffect hook for timer
   useEffect(() => {
@@ -47,7 +49,7 @@ const PlayingBoard = ({ players, paused, increaseScore, changeBotColor, winner, 
       }
     }, 987);
     return () => clearInterval(myCountdown);
-  });
+  }, [timeRemaining]);
 
   // Called when a player clicks an empty space to make a move
   const onCircleClick = (e) => {
@@ -57,49 +59,52 @@ const PlayingBoard = ({ players, paused, increaseScore, changeBotColor, winner, 
     let col = parseInt(location[1]);
     let clickedCircle = document.getElementById(location);
     
-    const updatedBoard = [...board]
-    updatedBoard[row][col] = false;
-    updatedBoard[row - 1][col] = true;
-    setBoard(updatedBoard);
+    let updatedBoard = [...board]
+    updatedBoard[row][col] = true;
+    updatedBoard[row - 1][col] = false;
 
-    clickedCircle.getElementsByTagName("button")[0].setAttribute("disabled", true);
-    clickedCircle.getElementsByTagName("button")[0].classList.add("disabled");
+    // setTimeout(() => {setBoard(updatedBoard)}, 5000);
 
-    if (redActive === true) {
-      clickedCircle.getElementsByTagName("button")[0].classList.add("red-clicked");
-    } else {
-      clickedCircle.getElementsByTagName("button")[0].classList.add("yellow-clicked");
-    }
+    // clickedCircle.getElementsByTagName("button")[0].setAttribute("disabled", true);
+    // clickedCircle.getElementsByTagName("button")[0].classList.add("disabled");
+
+    // if (redActive === true) {
+    //   clickedCircle.getElementsByTagName("button")[0].classList.add("red-clicked");
+    // } else {
+    //   clickedCircle.getElementsByTagName("button")[0].classList.add("yellow-clicked");
+    // }
 
     setRedActive(!redActive);
+    // setTimeout(() => {setRedActive(!redActive)}, 5000);
 
-    let colNum = parseInt(location[1]);
-    let leftPercent = ((colNum - 1) * 14) + 5;
-    let leftPerStr = leftPercent.toString() + "%";
-    document.getElementById("marker").style.left = leftPerStr;
 
-    let rowNum = parseInt(location[3]);
+    // let colNum = parseInt(location[1]);
+    // let leftPercent = ((colNum - 1) * 14) + 5;
+    // let leftPerStr = leftPercent.toString() + "%";
+    // document.getElementById("marker").style.left = leftPerStr;
 
-    if (location[3] !== "1") {
-      let oneAbove = location[0] + location[1] + location[2] + parseInt(location[3] - 1).toString();
-      let oneAboveClickedCircle = document.getElementById(oneAbove);
-      oneAboveClickedCircle.getElementsByTagName("button")[0].removeAttribute("disabled", false);
-      oneAboveClickedCircle.getElementsByTagName("button")[0].classList.remove("disabled");
-    }
+    // let rowNum = parseInt(location[3]);
 
-    let newPlayingBoard = playingBoardArr;
+    // if (location[3] !== "1") {
+    //   let oneAbove = location[0] + location[1] + location[2] + parseInt(location[3] - 1).toString();
+    //   let oneAboveClickedCircle = document.getElementById(oneAbove);
+    //   oneAboveClickedCircle.getElementsByTagName("button")[0].removeAttribute("disabled", false);
+    //   oneAboveClickedCircle.getElementsByTagName("button")[0].classList.remove("disabled");
+    // }
 
-    if (redActive === true) {
-      newPlayingBoard[rowNum - 1][colNum - 1] = 'red'
-    } else {
-      newPlayingBoard[rowNum - 1][colNum - 1] = 'yellow'
-    }
+    // let newPlayingBoard = playingBoardArr;
+
+    // if (redActive === true) {
+    //   newPlayingBoard[rowNum - 1][colNum - 1] = 'red'
+    // } else {
+    //   newPlayingBoard[rowNum - 1][colNum - 1] = 'yellow'
+    // }
     
-    setPlayingBoardArr(newPlayingBoard);
+    // setPlayingBoardArr(newPlayingBoard);
 
-    horizontalCheck(newPlayingBoard);
+    // horizontalCheck(newPlayingBoard);
 
-    setTimeRemaining(30);
+    // setTimeRemaining(30);
   }
 
   // Checks for a horizontal victory
@@ -178,17 +183,18 @@ const PlayingBoard = ({ players, paused, increaseScore, changeBotColor, winner, 
 
   // Resets the game
   const endGame = (redActive, winningRow, winningCol) => {
-    increaseScore(redActive);
-    changeBotColor(redActive);
-    callSetWinner();
-    setPlayingBoardArr([
-      [[],[],[],[],[],[],[]],
-      [[],[],[],[],[],[],[]],
-      [[],[],[],[],[],[],[]],
-      [[],[],[],[],[],[],[]],
-      [[],[],[],[],[],[],[]],
-      [[],[],[],[],[],[],[]]
-    ]);
+    console.log('end game');
+    // increaseScore(redActive);
+    // changeBotColor(redActive);
+    // callSetWinner();
+    // setPlayingBoardArr([
+    //   [[],[],[],[],[],[],[]],
+    //   [[],[],[],[],[],[],[]],
+    //   [[],[],[],[],[],[],[]],
+    //   [[],[],[],[],[],[],[]],
+    //   [[],[],[],[],[],[],[]],
+    //   [[],[],[],[],[],[],[]]
+    // ]);
   }
 
   let initPlayBoard = (

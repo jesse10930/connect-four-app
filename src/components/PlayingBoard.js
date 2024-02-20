@@ -10,12 +10,12 @@ import yellowTurn from '../starter-code/images/turn-background-yellow.svg';
 import WinnerBoard from '../components/WinnerBoard';
 
 const initBoard = [
-  [true, true, true, true, true, true, true],
-  [true, true, true, true, true, true, true],
-  [true, true, true, true, true, true, true],
-  [true, true, true, true, true, true, true],
-  [true, true, true, true, true, true, true],
-  [false, false, false, false, false, false, false],
+  [{ disabled: true, clicked: false }, { disabled: true, clicked: false }, { disabled: true, clicked: false }, { disabled: true, clicked: false }, { disabled: true, clicked: false }, { disabled: true, clicked: false }, { disabled: true, clicked: false }],
+  [{ disabled: true, clicked: false }, { disabled: true, clicked: false }, { disabled: true, clicked: false }, { disabled: true, clicked: false }, { disabled: true, clicked: false }, { disabled: true, clicked: false }, { disabled: true, clicked: false }],
+  [{ disabled: true, clicked: false }, { disabled: true, clicked: false }, { disabled: true, clicked: false }, { disabled: true, clicked: false }, { disabled: true, clicked: false }, { disabled: true, clicked: false }, { disabled: true, clicked: false }],
+  [{ disabled: true, clicked: false }, { disabled: true, clicked: false }, { disabled: true, clicked: false }, { disabled: true, clicked: false }, { disabled: true, clicked: false }, { disabled: true, clicked: false }, { disabled: true, clicked: false }],
+  [{ disabled: true, clicked: false }, { disabled: true, clicked: false }, { disabled: true, clicked: false }, { disabled: true, clicked: false }, { disabled: true, clicked: false }, { disabled: true, clicked: false }, { disabled: true, clicked: false }],
+  [{ disabled: false, clicked: false }, { disabled: false, clicked: false }, { disabled: false, clicked: false }, { disabled: false, clicked: false }, { disabled: false, clicked: false }, { disabled: false, clicked: false }, { disabled: false, clicked: false }],
 ]
 
 const PlayingBoard = ({ players, paused, increaseScore, changeBotColor, winner, callSetWinner }) => {
@@ -31,8 +31,6 @@ const PlayingBoard = ({ players, paused, increaseScore, changeBotColor, winner, 
   // ]);
   const [board, setBoard] = useState(initBoard);
   const [pauseTimer, setPauseTimer] = useState(false);
-
-  console.log('rendered');
 
   // Useeffect hook for timer
   useEffect(() => {
@@ -60,37 +58,18 @@ const PlayingBoard = ({ players, paused, increaseScore, changeBotColor, winner, 
     let clickedCircle = document.getElementById(location);
     
     let updatedBoard = [...board]
-    updatedBoard[row][col] = true;
-    updatedBoard[row - 1][col] = false;
+    updatedBoard[row][col] = { disabled: true, clicked: (redActive? 'red-clicked' : 'yellow-clicked') };
+    if (row !== 0) {
+      updatedBoard[row - 1][col] = { disabled: false, clicked: false };
+    }
 
-    // setTimeout(() => {setBoard(updatedBoard)}, 5000);
-
-    // clickedCircle.getElementsByTagName("button")[0].setAttribute("disabled", true);
-    // clickedCircle.getElementsByTagName("button")[0].classList.add("disabled");
-
-    // if (redActive === true) {
-    //   clickedCircle.getElementsByTagName("button")[0].classList.add("red-clicked");
-    // } else {
-    //   clickedCircle.getElementsByTagName("button")[0].classList.add("yellow-clicked");
-    // }
-
+    setBoard(updatedBoard)
     setRedActive(!redActive);
-    // setTimeout(() => {setRedActive(!redActive)}, 5000);
 
 
-    // let colNum = parseInt(location[1]);
-    // let leftPercent = ((colNum - 1) * 14) + 5;
-    // let leftPerStr = leftPercent.toString() + "%";
-    // document.getElementById("marker").style.left = leftPerStr;
-
-    // let rowNum = parseInt(location[3]);
-
-    // if (location[3] !== "1") {
-    //   let oneAbove = location[0] + location[1] + location[2] + parseInt(location[3] - 1).toString();
-    //   let oneAboveClickedCircle = document.getElementById(oneAbove);
-    //   oneAboveClickedCircle.getElementsByTagName("button")[0].removeAttribute("disabled", false);
-    //   oneAboveClickedCircle.getElementsByTagName("button")[0].classList.remove("disabled");
-    // }
+    let leftPercent = ((col) * 14) + 4;
+    let leftPerStr = leftPercent.toString() + "%";
+    document.getElementById("marker").style.left = leftPerStr;
 
     // let newPlayingBoard = playingBoardArr;
 
@@ -102,17 +81,18 @@ const PlayingBoard = ({ players, paused, increaseScore, changeBotColor, winner, 
     
     // setPlayingBoardArr(newPlayingBoard);
 
-    // horizontalCheck(newPlayingBoard);
+    horizontalCheck(updatedBoard);
 
-    // setTimeRemaining(30);
+    setTimeRemaining(30);
   }
 
   // Checks for a horizontal victory
-  const horizontalCheck = (newPlayingBoard) => {
+  const horizontalCheck = (updatedBoard) => {
     for (let row = 0; row <= 5; row++) {
       for (let col = 0; col <= 3; col++) {
-        let temp = newPlayingBoard[row][col] + newPlayingBoard[row][col + 1] + newPlayingBoard[row][col + 2] + newPlayingBoard[row][col + 3];
-        let tempActive = (redActive) ? "redredredred" : "yellowyellowyellowyellow";
+        let temp = updatedBoard[row][col].clicked + updatedBoard[row][col + 1].clicked + updatedBoard[row][col + 2].clicked + updatedBoard[row][col + 3].clicked;
+        let tempActive = (redActive) ? "red-clickedred-clickedred-clickedred-clicked" : "yellow-clickedyellow-clickedyellow-clickedyellow-clicked";
+
         if (temp === tempActive) {
           let winningRow = row;
           let winningCol = col;
@@ -123,15 +103,16 @@ const PlayingBoard = ({ players, paused, increaseScore, changeBotColor, winner, 
       }
     }
 
-    verticalCheck(newPlayingBoard);
+    verticalCheck(updatedBoard);
   }
 
   // Checks for a vertial victory
-  const verticalCheck = (newPlayingBoard) => {
+  const verticalCheck = (updatedBoard) => {
     for (let col = 0; col <= 6; col++) {
       for (let row = 0; row <= 2; row++) {
-        let temp = newPlayingBoard[row][col] + newPlayingBoard[row + 1][col] + newPlayingBoard[row + 2][col] + newPlayingBoard[row + 3][col];
-        let tempActive = (redActive) ? "redredredred" : "yellowyellowyellowyellow";
+        let temp = updatedBoard[row][col].clicked + updatedBoard[row + 1][col].clicked + updatedBoard[row + 2][col].clicked + updatedBoard[row + 3][col].clicked;
+        let tempActive = (redActive) ? "red-clickedred-clickedred-clickedred-clicked" : "yellow-clickedyellow-clickedyellow-clickedyellow-clicked";
+        
         if (temp === tempActive) {
           let winningRow = row;
           let winningCol = col;
@@ -142,15 +123,16 @@ const PlayingBoard = ({ players, paused, increaseScore, changeBotColor, winner, 
       }
     }
 
-    diagonalUpCheck(newPlayingBoard);
+    diagonalUpCheck(updatedBoard);
   }
 
   // Checks for a diagonal victory from lower left to upper right
-  const diagonalUpCheck = (newPlayingBoard) => {
+  const diagonalUpCheck = (updatedBoard) => {
     for (let col = 1; col <= 4; col++) {
       for (let row = 4; row <= 6; row++) {
-        let temp = newPlayingBoard[row - 1][col - 1] + newPlayingBoard[row - 2][col] + newPlayingBoard[row - 3][col + 1] + newPlayingBoard[row - 4][col + 2];
-        let tempActive = (redActive) ? "redredredred" : "yellowyellowyellowyellow";
+        let temp = updatedBoard[row - 1][col - 1].clicked + updatedBoard[row - 2][col].clicked + updatedBoard[row - 3][col + 1].clicked + updatedBoard[row - 4][col + 2].clicked;
+        let tempActive = (redActive) ? "red-clickedred-clickedred-clickedred-clicked" : "yellow-clickedyellow-clickedyellow-clickedyellow-clicked";
+        
         if (temp === tempActive) {
           let winningRow = row;
           let winningCol = col;
@@ -161,15 +143,16 @@ const PlayingBoard = ({ players, paused, increaseScore, changeBotColor, winner, 
       }
     }
 
-    diagonalDownCheck(newPlayingBoard);
+    diagonalDownCheck(updatedBoard);
   }
 
   // Checks for a diagonal victory from upper left to lower right
-  const diagonalDownCheck = (newPlayingBoard) => {
+  const diagonalDownCheck = (updatedBoard) => {
     for (let col = 1; col <= 4; col++) {
       for (let row = 1; row <= 3; row++) {
-        let temp = newPlayingBoard[row - 1][col - 1] + newPlayingBoard[row][col] + newPlayingBoard[row + 1][col + 1] + newPlayingBoard[row + 2][col + 2];
-        let tempActive = (redActive) ? "redredredred" : "yellowyellowyellowyellow";
+        let temp = updatedBoard[row - 1][col - 1].clicked + updatedBoard[row][col].clicked + updatedBoard[row + 1][col + 1].clicked + updatedBoard[row + 2][col + 2].clicked;
+        let tempActive = (redActive) ? "red-clickedred-clickedred-clickedred-clicked" : "yellow-clickedyellow-clickedyellow-clickedyellow-clicked";
+        
         if (temp === tempActive) {
           let winningRow = row;
           let winningCol = col;
@@ -211,13 +194,13 @@ const PlayingBoard = ({ players, paused, increaseScore, changeBotColor, winner, 
           alt="white-board"
         />
         {board.map((row, rowIndex) => (
-          row.map((disabled, colIndex) => (
+          row.map((cell, colIndex) => (
             <div key={rowIndex + colIndex} id={(rowIndex).toString() + (colIndex).toString()} className="circle-cont">
               <button 
                 key={colIndex} 
-                className={`${disabled ? 'disabled' : ''} spaceBtn`}
+                className={`${cell.disabled ? 'disabled' : ''} ${cell.clicked ? cell.clicked : ''} spaceBtn`}
                 onClick={(e) => onCircleClick(e)}
-                disabled={disabled}
+                disabled={cell.disabled}
               >
               </button>
             </div>

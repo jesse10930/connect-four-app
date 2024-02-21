@@ -5,7 +5,7 @@ const WinnerBoard = ({ redActive, players, resetBoard }) => {
     <div id="winner-board">
       <p id="winning-player" className='heading-xs'>{(redActive) ? players[0] : players[1]}</p>
       <p id="time" className="heading-l">wins</p>
-      <button className='sm-prpl-btn heading-xs play-again-btn' onClick={resetBoard}>play again</button>
+      <button className={`${redActive ? 'heading-xs play-again-btn red-win-btn' : 'heading-xs play-again-btn yellow-win-btn'}`} onClick={resetBoard}>play again</button>
   </div>
   )
 }

@@ -106,6 +106,42 @@
   }
 }
 
+.yellow-win-btn {
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: $dk-purple;
+  border-radius: 20px;
+  color: white;
+  padding: 0px 25px;
+  height: 39px;
+  width: 120px;
+
+  &:hover {
+    cursor: pointer;
+    background: $yellow;
+  }
+}
+
+.red-win-btn {
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: $dk-purple;
+  border-radius: 20px;
+  color: white;
+  padding: 0px 25px;
+  height: 39px;
+  width: 120px;
+
+  &:hover {
+    cursor: pointer;
+    background: $pink;
+  }
+}
+
 // Scoreboard
 .sb-cont {
   width: 141px;

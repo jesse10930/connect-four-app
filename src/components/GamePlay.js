@@ -46,7 +46,8 @@ const GamePlay = ({callSetStarted, players, gameStartStop}) => {
   }
 
   const callSetWinner = () => {
-    setWinner(true);
+    let newWinner = winner;
+    setWinner(!newWinner);
   }
 
   // const endOfGame = () => {
@@ -62,6 +63,10 @@ const GamePlay = ({callSetStarted, players, gameStartStop}) => {
 
   const changeBotColor = (redActive) => {
     redActive ? document.getElementById("bot-shadow").style.backgroundColor = "#fd6687" : document.getElementById("bot-shadow").style.backgroundColor = "#ffce67";
+  }
+
+  const resetBotColor = () => {
+    document.getElementById("bot-shadow").style.backgroundColor = "#5c2dd5";
   }
 
 
@@ -96,6 +101,7 @@ const GamePlay = ({callSetStarted, players, gameStartStop}) => {
             increaseScore={increaseScore}
             changeBotColor={changeBotColor}
             callSetWinner={callSetWinner}
+            resetBotColor={resetBotColor}
           />
           <ScoreBoard
             player={players[1]}

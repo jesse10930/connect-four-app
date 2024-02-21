@@ -18,24 +18,16 @@ const initBoard = [
   [{ disabled: false, clicked: false }, { disabled: false, clicked: false }, { disabled: false, clicked: false }, { disabled: false, clicked: false }, { disabled: false, clicked: false }, { disabled: false, clicked: false }, { disabled: false, clicked: false }],
 ]
 
-const PlayingBoard = ({ players, paused, increaseScore, changeBotColor, winner, callSetWinner }) => {
+const PlayingBoard = ({ players, paused, increaseScore, changeBotColor, winner, callSetWinner, resetBotColor }) => {
   const [timeRemaining, setTimeRemaining] = useState(30);
   const [redActive, setRedActive] = useState(true);
-  // const [playingBoardArr, setPlayingBoardArr] = useState([
-  //   [[],[],[],[],[],[],[]],
-  //   [[],[],[],[],[],[],[]],
-  //   [[],[],[],[],[],[],[]],
-  //   [[],[],[],[],[],[],[]],
-  //   [[],[],[],[],[],[],[]],
-  //   [[],[],[],[],[],[],[]]
-  // ]);
   const [board, setBoard] = useState(initBoard);
   const [pauseTimer, setPauseTimer] = useState(false);
 
   // Useeffect hook for timer
   useEffect(() => {
     const myCountdown = setInterval(() => {
-      if(!pauseTimer) {
+      if(!pauseTimer && !winner) {
         if(timeRemaining > 0) {
           setTimeRemaining(timeRemaining - 1)
         }
@@ -55,7 +47,6 @@ const PlayingBoard = ({ players, paused, increaseScore, changeBotColor, winner, 
     let location = e.target.parentNode.id;
     let row = parseInt(location[0]);
     let col = parseInt(location[1]);
-    let clickedCircle = document.getElementById(location);
     
     let updatedBoard = [...board]
     updatedBoard[row][col] = { disabled: true, clicked: (redActive? 'red-clicked' : 'yellow-clicked') };
@@ -64,30 +55,23 @@ const PlayingBoard = ({ players, paused, increaseScore, changeBotColor, winner, 
     }
 
     setBoard(updatedBoard)
-    setRedActive(!redActive);
-
 
     let leftPercent = ((col) * 14) + 4;
     let leftPerStr = leftPercent.toString() + "%";
     document.getElementById("marker").style.left = leftPerStr;
 
-    // let newPlayingBoard = playingBoardArr;
+    let winningMove = checkForWinners(updatedBoard);
 
-    // if (redActive === true) {
-    //   newPlayingBoard[rowNum - 1][colNum - 1] = 'red'
-    // } else {
-    //   newPlayingBoard[rowNum - 1][colNum - 1] = 'yellow'
-    // }
-    
-    // setPlayingBoardArr(newPlayingBoard);
+    if (winningMove) {
+      endGame(redActive, null, null)
+    } else {
+      setTimeRemaining(30);
+      setRedActive(!redActive);
+    }
 
-    horizontalCheck(updatedBoard);
-
-    setTimeRemaining(30);
   }
 
-  // Checks for a horizontal victory
-  const horizontalCheck = (updatedBoard) => {
+  const checkForWinners = (updatedBoard) => {
     for (let row = 0; row <= 5; row++) {
       for (let col = 0; col <= 3; col++) {
         let temp = updatedBoard[row][col].clicked + updatedBoard[row][col + 1].clicked + updatedBoard[row][col + 2].clicked + updatedBoard[row][col + 3].clicked;
@@ -97,17 +81,11 @@ const PlayingBoard = ({ players, paused, increaseScore, changeBotColor, winner, 
           let winningRow = row;
           let winningCol = col;
 
-          endGame(redActive, winningRow, winningCol);
-          break;
+          return true;
         }
       }
     }
 
-    verticalCheck(updatedBoard);
-  }
-
-  // Checks for a vertial victory
-  const verticalCheck = (updatedBoard) => {
     for (let col = 0; col <= 6; col++) {
       for (let row = 0; row <= 2; row++) {
         let temp = updatedBoard[row][col].clicked + updatedBoard[row + 1][col].clicked + updatedBoard[row + 2][col].clicked + updatedBoard[row + 3][col].clicked;
@@ -117,17 +95,11 @@ const PlayingBoard = ({ players, paused, increaseScore, changeBotColor, winner, 
           let winningRow = row;
           let winningCol = col;
 
-          endGame(redActive, winningRow, winningCol);
-          break;
+          return true;
         }
       }
     }
 
-    diagonalUpCheck(updatedBoard);
-  }
-
-  // Checks for a diagonal victory from lower left to upper right
-  const diagonalUpCheck = (updatedBoard) => {
     for (let col = 1; col <= 4; col++) {
       for (let row = 4; row <= 6; row++) {
         let temp = updatedBoard[row - 1][col - 1].clicked + updatedBoard[row - 2][col].clicked + updatedBoard[row - 3][col + 1].clicked + updatedBoard[row - 4][col + 2].clicked;
@@ -137,17 +109,11 @@ const PlayingBoard = ({ players, paused, increaseScore, changeBotColor, winner, 
           let winningRow = row;
           let winningCol = col;
 
-          endGame(redActive, winningRow, winningCol);
-          break;
+          return true;
         }
       }
     }
 
-    diagonalDownCheck(updatedBoard);
-  }
-
-  // Checks for a diagonal victory from upper left to lower right
-  const diagonalDownCheck = (updatedBoard) => {
     for (let col = 1; col <= 4; col++) {
       for (let row = 1; row <= 3; row++) {
         let temp = updatedBoard[row - 1][col - 1].clicked + updatedBoard[row][col].clicked + updatedBoard[row + 1][col + 1].clicked + updatedBoard[row + 2][col + 2].clicked;
@@ -157,28 +123,117 @@ const PlayingBoard = ({ players, paused, increaseScore, changeBotColor, winner, 
           let winningRow = row;
           let winningCol = col;
 
-          endGame(redActive, winningRow, winningCol);
-          break;
+          return true;
         }
       }
     }
   }
 
+  // // Checks for a horizontal victory
+  // const horizontalCheck = (updatedBoard) => {
+  //   for (let row = 0; row <= 5; row++) {
+  //     for (let col = 0; col <= 3; col++) {
+  //       let temp = updatedBoard[row][col].clicked + updatedBoard[row][col + 1].clicked + updatedBoard[row][col + 2].clicked + updatedBoard[row][col + 3].clicked;
+  //       let tempActive = (redActive) ? "red-clickedred-clickedred-clickedred-clicked" : "yellow-clickedyellow-clickedyellow-clickedyellow-clicked";
+
+  //       if (temp === tempActive) {
+  //         let winningRow = row;
+  //         let winningCol = col;
+
+  //         endGame(redActive, winningRow, winningCol);
+  //         break;
+  //       }
+  //     }
+  //   }
+
+  //   verticalCheck(updatedBoard);
+  // }
+
+  // // Checks for a vertial victory
+  // const verticalCheck = (updatedBoard) => {
+  //   for (let col = 0; col <= 6; col++) {
+  //     for (let row = 0; row <= 2; row++) {
+  //       let temp = updatedBoard[row][col].clicked + updatedBoard[row + 1][col].clicked + updatedBoard[row + 2][col].clicked + updatedBoard[row + 3][col].clicked;
+  //       let tempActive = (redActive) ? "red-clickedred-clickedred-clickedred-clicked" : "yellow-clickedyellow-clickedyellow-clickedyellow-clicked";
+        
+  //       if (temp === tempActive) {
+  //         let winningRow = row;
+  //         let winningCol = col;
+
+  //         endGame(redActive, winningRow, winningCol);
+  //         break;
+  //       }
+  //     }
+  //   }
+
+  //   diagonalUpCheck(updatedBoard);
+  // }
+
+  // // Checks for a diagonal victory from lower left to upper right
+  // const diagonalUpCheck = (updatedBoard) => {
+  //   for (let col = 1; col <= 4; col++) {
+  //     for (let row = 4; row <= 6; row++) {
+  //       let temp = updatedBoard[row - 1][col - 1].clicked + updatedBoard[row - 2][col].clicked + updatedBoard[row - 3][col + 1].clicked + updatedBoard[row - 4][col + 2].clicked;
+  //       let tempActive = (redActive) ? "red-clickedred-clickedred-clickedred-clicked" : "yellow-clickedyellow-clickedyellow-clickedyellow-clicked";
+        
+  //       if (temp === tempActive) {
+  //         let winningRow = row;
+  //         let winningCol = col;
+
+  //         endGame(redActive, winningRow, winningCol);
+  //         break;
+  //       }
+  //     }
+  //   }
+
+  //   diagonalDownCheck(updatedBoard);
+  // }
+
+  // // Checks for a diagonal victory from upper left to lower right
+  // const diagonalDownCheck = (updatedBoard) => {
+  //   for (let col = 1; col <= 4; col++) {
+  //     for (let row = 1; row <= 3; row++) {
+  //       let temp = updatedBoard[row - 1][col - 1].clicked + updatedBoard[row][col].clicked + updatedBoard[row + 1][col + 1].clicked + updatedBoard[row + 2][col + 2].clicked;
+  //       let tempActive = (redActive) ? "red-clickedred-clickedred-clickedred-clicked" : "yellow-clickedyellow-clickedyellow-clickedyellow-clicked";
+        
+  //       if (temp === tempActive) {
+  //         let winningRow = row;
+  //         let winningCol = col;
+
+  //         endGame(redActive, winningRow, winningCol);
+  //         break;
+  //       }
+  //     }
+  //   }
+
+  //   setTimeRemaining(30);
+  //   setRedActive(!redActive);
+  // }
+
   // Resets the game
   const endGame = (redActive, winningRow, winningCol) => {
-    console.log('end game');
-    // increaseScore(redActive);
-    // changeBotColor(redActive);
-    // callSetWinner();
-    // setPlayingBoardArr([
-    //   [[],[],[],[],[],[],[]],
-    //   [[],[],[],[],[],[],[]],
-    //   [[],[],[],[],[],[],[]],
-    //   [[],[],[],[],[],[],[]],
-    //   [[],[],[],[],[],[],[]],
-    //   [[],[],[],[],[],[],[]]
-    // ]);
+    console.log(redActive);
+    increaseScore(redActive);
+    changeBotColor(redActive);
+    callSetWinner();
   }
+
+  const resetBoard = () => {
+    let newGameBoard = [
+      [{ disabled: true, clicked: false }, { disabled: true, clicked: false }, { disabled: true, clicked: false }, { disabled: true, clicked: false }, { disabled: true, clicked: false }, { disabled: true, clicked: false }, { disabled: true, clicked: false }],
+      [{ disabled: true, clicked: false }, { disabled: true, clicked: false }, { disabled: true, clicked: false }, { disabled: true, clicked: false }, { disabled: true, clicked: false }, { disabled: true, clicked: false }, { disabled: true, clicked: false }],
+      [{ disabled: true, clicked: false }, { disabled: true, clicked: false }, { disabled: true, clicked: false }, { disabled: true, clicked: false }, { disabled: true, clicked: false }, { disabled: true, clicked: false }, { disabled: true, clicked: false }],
+      [{ disabled: true, clicked: false }, { disabled: true, clicked: false }, { disabled: true, clicked: false }, { disabled: true, clicked: false }, { disabled: true, clicked: false }, { disabled: true, clicked: false }, { disabled: true, clicked: false }],
+      [{ disabled: true, clicked: false }, { disabled: true, clicked: false }, { disabled: true, clicked: false }, { disabled: true, clicked: false }, { disabled: true, clicked: false }, { disabled: true, clicked: false }, { disabled: true, clicked: false }],
+      [{ disabled: false, clicked: false }, { disabled: false, clicked: false }, { disabled: false, clicked: false }, { disabled: false, clicked: false }, { disabled: false, clicked: false }, { disabled: false, clicked: false }, { disabled: false, clicked: false }],
+    ];
+
+    setBoard(newGameBoard);
+    callSetWinner();
+    resetBotColor();
+    setTimeRemaining(30);
+    
+  };
 
   let initPlayBoard = (
     <div id='playingboard'>
@@ -209,11 +264,6 @@ const PlayingBoard = ({ players, paused, increaseScore, changeBotColor, winner, 
       </div>
     </div>
   )
-
-  const resetBoard = () => {
-    setBoard(initBoard);
-  };
-
 
   return (
     <div id="pb-cont">
